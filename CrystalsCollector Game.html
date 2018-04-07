@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CrystalsCollector Game</title>
+
+  <!-- Bootstrap's javascript file that allows the dropdown menu to work  -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+
+  <!-- We link our html to the Bootstrap CDN -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+  <!-- Additional Style Sheet to Override Bootstrap -->
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+
+</head>
+
+<body>
+
+  <h1>Crystals Collector Game!</h1>
+  <h2>How to Play:</h2>
+  <h4>
+    Match your score with the Winning Score listed below!
+    <p>
+      There are four crystals to choose from. Each crystal will give you a different amount of points when selected. </p>
+    <p>
+      Keep clicking a different crystal to grow your score. </p>
+
+    <p>
+      Total your points to match the Winning Score to WIN THE GAME!
+    </p>
+  </h4>
+  <br>
+  <h2>Select any crystal:</h2>
+
+  <div class="gems">
+    <img id="purpleGem" src="assests\images\purple-gem.png" width="200" style="position: relative;" value="2">
+    <img id="pinkGem" src="assests\images\pink-gem.png" width="200" style="position: relative;" value="25">
+    <img id="blueGem" src="assests\images\blue-gem.png" width="200" style="position: relative;" value="1">
+    <img id="greenGem" src="assests\images\green-gem.png" width="200" style="position: relative;" value="10">
+  </div>
+
+  </div>
+
+  <br>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 score-column">
+        <h3>Your Score:
+          <span id="playerScore"></span>
+        </h3>
+      </div>
+
+
+      <div class="col-md-6 score-column">
+        <h3>Winning Score:
+          <span id="winningScore"></span>
+        </h3>
+      </div>
+    </div>
+  </div>
+
+
+  <br>
+  <div>
+    <h4>Your Total Wins: </h4>
+    <span id="wins"></span>
+  </div>
+  <div>
+    <h4>Your Total Losses: </h4>
+    <span id="losses"></span>
+  </div>
+
+
+  <script>
+
+    // Alerts for each gem image
+    //  $('img').bind('click', function (evt)
+    //  {
+    //    if($(this).attr('id') == 'purpleGem')
+    //    {
+    //       alert('You just got 2 Points!');
+    //    }
+    //    if($(this).attr('id') == 'pinkGem')
+    //    {
+    //       alert('You just got 25 points!');
+    //    }
+    //    if($(this).attr('id') == 'greenGem')
+    //    {
+    //       alert('You just got 1 points!');
+    //    }
+    //    if($(this).attr('id') == 'blueGem')
+    //    {
+    //       alert('You just got 10 points!');
+    //    }
+    //  });
+
+    // Selects a random number to be shown at the start of the game
+    $(document).ready(function () {
+      var randomNumber = Math.floor(Math.random() * 102 + 51)
+
+      $('#winningScore').text(randomNumber);
+
+
+      // Players Total Score collected by gem points
+      var playerScore = 0;
+      // number of wins has player has
+      var wins = 0;
+      // number of losses has player has
+      var losses = 0;
+      // flag to tell if the game has started
+      var gameStarted = false;
+      // flag for 'press any key to try again'
+      var hasFinished = false;
+
+      $('#wins').text(wins);
+      $('#losses').text(losses);
+
+      //Random number for each crystal
+      var gem1 = Math.floor(Math.random() * 9 + 1)
+      var gem2 = 1
+      var gem3 = Math.floor(Math.random() * 9 + 1)
+      var gem4 = Math.floor(Math.random() * 9 + 1)
+
+      // Reset game and scores
+      function reset() {
+        randomNumber = Math.floor(Math.random() * 102 + 19);
+        console.log(randomNumber)
+        $('#winningScore').text(randomNumber);
+        gem1 = Math.floor(Math.random() * 9 + 1);
+        gem2 = 1;
+        gem3 = Math.floor(Math.random() * 9 + 1);
+        gem4 = Math.floor(Math.random() * 9 + 1);
+        playerScore = 0;
+        $('#playerScore').text(playerScore);
+      }
+
+
+      // Display wins
+      function theBest() {
+        alert("Great job! You won all the treasure!!");
+        wins++;
+        $('#wins').text(wins);
+        reset();
+      }
+      // Display losses
+      function theWorst() {
+        alert("Come better next time.");
+        losses++;
+        $('#losses').text(losses);
+        reset()
+      }
+
+
+      //Random number Purple Crystal
+      $("#purpleGem").on('click', function () {
+        playerScore = playerScore + gem1;
+        alert("You got " + playerScore + " points!");
+        $('#playerScore').text(playerScore);
+
+        if (playerScore == randomNumber) {
+          theBest();
+        }
+        else if (playerScore > randomNumber) {
+          theWorst();
+        }
+      })
+
+      //Random number Pink Crystal
+      $("#pinkGem").on('click', function () {
+        playerScore = playerScore + gem2;
+        alert("You got " + playerScore + " points!");
+        $('#playerScore').text(playerScore);
+
+        if (playerScore == randomNumber) {
+          theBest();
+        }
+        else if (playerScore > randomNumber) {
+          theWorst();
+        }
+      })
+
+      //Random number Blue Crystal
+      $("#blueGem").on('click', function () {
+        playerScore = playerScore + gem3;
+        alert("You got " + playerScore + " points!");
+        $('#playerScore').text(playerScore);
+
+        if (playerScore == randomNumber) {
+          theBest();
+        }
+        else if (playerScore > randomNumber) {
+          theWorst();
+        }
+      })
+
+      //Random number for Green Crystal
+      $("#greenGem").on('click', function () {
+        playerScore = playerScore + gem4;
+        alert("You got " + playerScore + " points!");
+        $('#playerScore').text(playerScore);
+
+        if (playerScore == randomNumber) {
+          theBest();
+        }
+        else if (playerScore > randomNumber) {
+          theWorst();
+        }
+      })
+
+
+    });
+
+
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+body{
+    font-family: Impact, Charcoal, sans-serif;
+    color: #F1D487;
+	background: url("cavebg.jpg") no-repeat center center fixed;
+    text-align: center;
+}
+
+h1, h2,h3,
+h4,h5,h6 {
+    padding: 5px;
+    color: #F1D487;
+    text-align: center;
+}
